@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-const BaseKeyType = require('./base_key_type');
-const ChainType = require('./chain_type');
-const SessionRecord = require('./session_record');
-const crypto = require('./crypto');
-const curve = require('./curve');
-const errors = require('./errors');
-const queueJob = require('./queue_job');
+const BaseKeyType = require("./base_key_type");
+const ChainType = require("./chain_type");
+const SessionRecord = require("./session_record");
+const crypto = require("./crypto");
+const curve = require("./curve");
+const errors = require("./errors");
+const queueJob = require("./queue_job");
 
 class SessionBuilder {
   constructor(storage, protocolAddress) {
@@ -17,10 +17,22 @@ class SessionBuilder {
   async initOutgoing(device) {
     const fqAddr = this.addr.toString();
     return await queueJob(fqAddr, async () => {
-      if (!(await this.storage.isTrustedIdentity(this.addr.id, device.identityKey))) {
-        throw new errors.UntrustedIdentityKeyError(this.addr.id, device.identityKey);
+      if (
+        !(await this.storage.isTrustedIdentity(
+          this.addr.id,
+          device.identityKey
+        ))
+      ) {
+        throw new errors.UntrustedIdentityKeyError(
+          this.addr.id,
+          device.identityKey
+        );
       }
-      curve.verifySignature(device.identityKey, device.signedPreKey.publicKey, device.signedPreKey.signature);
+      curve.verifySignature(
+        device.identityKey,
+        device.signedPreKey.publicKey,
+        device.signedPreKey.signature
+      );
       const baseKey = curve.generateKeyPair();
       const devicePreKey = device.preKey && device.preKey.publicKey;
       const session = await this.initSession(
@@ -30,7 +42,7 @@ class SessionBuilder {
         device.identityKey,
         devicePreKey,
         device.signedPreKey.publicKey,
-        device.registrationId,
+        device.registrationId
       );
       session.pendingPreKey = {
         signedKeyId: device.signedPreKey.keyId,
@@ -56,7 +68,10 @@ class SessionBuilder {
   async initIncoming(record, message) {
     const fqAddr = this.addr.toString();
     if (!(await this.storage.isTrustedIdentity(fqAddr, message.identityKey))) {
-      throw new errors.UntrustedIdentityKeyError(this.addr.id, message.identityKey);
+      throw new errors.UntrustedIdentityKeyError(
+        this.addr.id,
+        message.identityKey
+      );
     }
     if (record.getSession(message.baseKey)) {
       // This just means we haven't replied.
@@ -64,11 +79,13 @@ class SessionBuilder {
     }
     const preKeyPair = await this.storage.loadPreKey(message.preKeyId);
     if (message.preKeyId && !preKeyPair) {
-      throw new errors.PreKeyError('Invalid PreKey ID');
+      throw new errors.PreKeyError("Invalid PreKey ID");
     }
-    const signedPreKeyPair = await this.storage.loadSignedPreKey(message.signedPreKeyId);
+    const signedPreKeyPair = await this.storage.loadSignedPreKey(
+      message.signedPreKeyId
+    );
     if (!signedPreKeyPair) {
-      throw new errors.PreKeyError('Missing SignedPreKey');
+      throw new errors.PreKeyError("Missing SignedPreKey");
     }
     const existingOpenSession = record.getOpenSession();
     if (existingOpenSession) {
@@ -82,8 +99,8 @@ class SessionBuilder {
         message.identityKey,
         message.baseKey,
         undefined,
-        message.registrationId,
-      ),
+        message.registrationId
+      )
     );
     return message.preKeyId;
   }
@@ -95,16 +112,16 @@ class SessionBuilder {
     theirIdentityPubKey,
     theirEphemeralPubKey,
     theirSignedPubKey,
-    registrationId,
+    registrationId
   ) {
     if (isInitiator) {
       if (ourSignedKey) {
-        throw new Error('Invalid call to initSession');
+        throw new Error("Invalid call to initSession");
       }
       ourSignedKey = ourEphemeralKey;
     } else {
       if (theirSignedPubKey) {
-        throw new Error('Invalid call to initSession');
+        throw new Error("Invalid call to initSession");
       }
       theirSignedPubKey = theirEphemeralPubKey;
     }
@@ -118,9 +135,18 @@ class SessionBuilder {
       sharedSecret[i] = 0xff;
     }
     const ourIdentityKey = await this.storage.getOurIdentity();
-    const a1 = curve.calculateAgreement(theirSignedPubKey, ourIdentityKey.privKey);
-    const a2 = curve.calculateAgreement(theirIdentityPubKey, ourSignedKey.privKey);
-    const a3 = curve.calculateAgreement(theirSignedPubKey, ourSignedKey.privKey);
+    const a1 = curve.calculateAgreement(
+      theirSignedPubKey,
+      ourIdentityKey.privKey
+    );
+    const a2 = curve.calculateAgreement(
+      theirIdentityPubKey,
+      ourSignedKey.privKey
+    );
+    const a3 = curve.calculateAgreement(
+      theirSignedPubKey,
+      ourSignedKey.privKey
+    );
     if (isInitiator) {
       sharedSecret.set(new Uint8Array(a1), 32);
       sharedSecret.set(new Uint8Array(a2), 32 * 2);
@@ -130,13 +156,16 @@ class SessionBuilder {
     }
     sharedSecret.set(new Uint8Array(a3), 32 * 3);
     if (ourEphemeralKey && theirEphemeralPubKey) {
-      const a4 = curve.calculateAgreement(theirEphemeralPubKey, ourEphemeralKey.privKey);
+      const a4 = curve.calculateAgreement(
+        theirEphemeralPubKey,
+        ourEphemeralKey.privKey
+      );
       sharedSecret.set(new Uint8Array(a4), 32 * 4);
     }
     const masterKey = crypto.deriveSecrets(
       Buffer.from(sharedSecret),
       Buffer.alloc(32),
-      Buffer.from('WhisperText'),
+      Buffer.from("WhisperText")
     );
     const session = SessionRecord.createEntry();
     session.registrationId = registrationId;
@@ -165,8 +194,15 @@ class SessionBuilder {
 
   calculateSendingRatchet(session, remoteKey) {
     const ratchet = session.currentRatchet;
-    const sharedSecret = curve.calculateAgreement(remoteKey, ratchet.ephemeralKeyPair.privKey);
-    const masterKey = crypto.deriveSecrets(sharedSecret, ratchet.rootKey, Buffer.from('WhisperRatchet'));
+    const sharedSecret = curve.calculateAgreement(
+      remoteKey,
+      ratchet.ephemeralKeyPair.privKey
+    );
+    const masterKey = crypto.deriveSecrets(
+      sharedSecret,
+      ratchet.rootKey,
+      Buffer.from("WhisperRatchet")
+    );
     session.addChain(ratchet.ephemeralKeyPair.pubKey, {
       messageKeys: {},
       chainKey: {

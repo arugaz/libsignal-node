@@ -1,10 +1,10 @@
 // vim: ts=4:sw=4:expandtab
 
-const curve = require('./curve');
-const nodeCrypto = require('crypto');
+const curve = require("./curve");
+const nodeCrypto = require("crypto");
 
 function isNonNegativeInteger(n) {
-  return typeof n === 'number' && n % 1 === 0 && n >= 0;
+  return typeof n === "number" && n % 1 === 0 && n >= 0;
 }
 
 exports.generateIdentityKeyPair = curve.generateKeyPair;
@@ -21,10 +21,10 @@ exports.generateSignedPreKey = function (identityKeyPair, signedKeyId) {
     !(identityKeyPair.pubKey instanceof Buffer) ||
     identityKeyPair.pubKey.byteLength != 33
   ) {
-    throw new TypeError('Invalid argument for identityKeyPair');
+    throw new TypeError("Invalid argument for identityKeyPair");
   }
   if (!isNonNegativeInteger(signedKeyId)) {
-    throw new TypeError('Invalid argument for signedKeyId: ' + signedKeyId);
+    throw new TypeError("Invalid argument for signedKeyId: " + signedKeyId);
   }
   const keyPair = curve.generateKeyPair();
   const sig = curve.calculateSignature(identityKeyPair.privKey, keyPair.pubKey);
@@ -37,7 +37,7 @@ exports.generateSignedPreKey = function (identityKeyPair, signedKeyId) {
 
 exports.generatePreKey = function (keyId) {
   if (!isNonNegativeInteger(keyId)) {
-    throw new TypeError('Invalid argument for keyId: ' + keyId);
+    throw new TypeError("Invalid argument for keyId: " + keyId);
   }
   const keyPair = curve.generateKeyPair();
   return {

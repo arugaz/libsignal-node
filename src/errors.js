@@ -2,10 +2,12 @@
 
 exports.SignalError = class SignalError extends Error {};
 
-exports.UntrustedIdentityKeyError = class UntrustedIdentityKeyError extends exports.SignalError {
+exports.UntrustedIdentityKeyError = class UntrustedIdentityKeyError extends (
+  exports.SignalError
+) {
   constructor(addr, identityKey) {
     super();
-    this.name = 'UntrustedIdentityKeyError';
+    this.name = "UntrustedIdentityKeyError";
     this.addr = addr;
     this.identityKey = identityKey;
   }
@@ -14,20 +16,22 @@ exports.UntrustedIdentityKeyError = class UntrustedIdentityKeyError extends expo
 exports.SessionError = class SessionError extends exports.SignalError {
   constructor(message) {
     super(message);
-    this.name = 'SessionError';
+    this.name = "SessionError";
   }
 };
 
-exports.MessageCounterError = class MessageCounterError extends exports.SessionError {
+exports.MessageCounterError = class MessageCounterError extends (
+  exports.SessionError
+) {
   constructor(message) {
     super(message);
-    this.name = 'MessageCounterError';
+    this.name = "MessageCounterError";
   }
 };
 
 exports.PreKeyError = class PreKeyError extends exports.SessionError {
   constructor(message) {
     super(message);
-    this.name = 'PreKeyError';
+    this.name = "PreKeyError";
   }
 };

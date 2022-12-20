@@ -4,7 +4,7 @@
  * jobQueue manages multiple queues indexed by device to serialize
  * session io ops on the database.
  */
-'use strict';
+"use strict";
 
 const _queueAsyncBuckets = new Map();
 const _gcLimit = 10000;
@@ -42,8 +42,8 @@ module.exports = function (bucket, awaitable) {
    * key representing the task queue to use. */
   if (!awaitable.name) {
     // Make debuging easier by adding a name to this function.
-    Object.defineProperty(awaitable, 'name', { writable: true });
-    if (typeof bucket === 'string') {
+    Object.defineProperty(awaitable, "name", { writable: true });
+    if (typeof bucket === "string") {
       awaitable.name = bucket;
     }
   }
@@ -58,7 +58,7 @@ module.exports = function (bucket, awaitable) {
       awaitable,
       resolve,
       reject,
-    }),
+    })
   );
   if (inactive) {
     /* An executor is not currently active; Start one now. */

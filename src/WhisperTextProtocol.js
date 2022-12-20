@@ -1,7 +1,7 @@
 /*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
-'use strict';
+"use strict";
 
-var $protobuf = require('protobufjs/minimal');
+var $protobuf = require("protobufjs/minimal");
 
 // Common aliases
 var $Reader = $protobuf.Reader,
@@ -9,7 +9,7 @@ var $Reader = $protobuf.Reader,
   $util = $protobuf.util;
 
 // Exported root namespace
-var $root = $protobuf.roots['default'] || ($protobuf.roots['default'] = {});
+var $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
 
 $root.textsecure = (function () {
   /**
@@ -99,13 +99,21 @@ $root.textsecure = (function () {
      */
     WhisperMessage.encode = function encode(message, writer) {
       if (!writer) writer = $Writer.create();
-      if (message.ephemeralKey != null && message.hasOwnProperty('ephemeralKey'))
+      if (
+        message.ephemeralKey != null &&
+        message.hasOwnProperty("ephemeralKey")
+      )
         writer.uint32(/* id 1, wireType 2 =*/ 10).bytes(message.ephemeralKey);
-      if (message.counter != null && message.hasOwnProperty('counter'))
+      if (message.counter != null && message.hasOwnProperty("counter"))
         writer.uint32(/* id 2, wireType 0 =*/ 16).uint32(message.counter);
-      if (message.previousCounter != null && message.hasOwnProperty('previousCounter'))
-        writer.uint32(/* id 3, wireType 0 =*/ 24).uint32(message.previousCounter);
-      if (message.ciphertext != null && message.hasOwnProperty('ciphertext'))
+      if (
+        message.previousCounter != null &&
+        message.hasOwnProperty("previousCounter")
+      )
+        writer
+          .uint32(/* id 3, wireType 0 =*/ 24)
+          .uint32(message.previousCounter);
+      if (message.ciphertext != null && message.hasOwnProperty("ciphertext"))
         writer.uint32(/* id 4, wireType 2 =*/ 34).bytes(message.ciphertext);
       return writer;
     };
@@ -185,27 +193,38 @@ $root.textsecure = (function () {
      * @returns {string|null} `null` if valid, otherwise the reason why it is not
      */
     WhisperMessage.verify = function verify(message) {
-      if (typeof message !== 'object' || message === null) return 'object expected';
-      if (message.ephemeralKey != null && message.hasOwnProperty('ephemeralKey'))
+      if (typeof message !== "object" || message === null)
+        return "object expected";
+      if (
+        message.ephemeralKey != null &&
+        message.hasOwnProperty("ephemeralKey")
+      )
         if (
           !(
-            (message.ephemeralKey && typeof message.ephemeralKey.length === 'number') ||
+            (message.ephemeralKey &&
+              typeof message.ephemeralKey.length === "number") ||
             $util.isString(message.ephemeralKey)
           )
         )
-          return 'ephemeralKey: buffer expected';
-      if (message.counter != null && message.hasOwnProperty('counter'))
-        if (!$util.isInteger(message.counter)) return 'counter: integer expected';
-      if (message.previousCounter != null && message.hasOwnProperty('previousCounter'))
-        if (!$util.isInteger(message.previousCounter)) return 'previousCounter: integer expected';
-      if (message.ciphertext != null && message.hasOwnProperty('ciphertext'))
+          return "ephemeralKey: buffer expected";
+      if (message.counter != null && message.hasOwnProperty("counter"))
+        if (!$util.isInteger(message.counter))
+          return "counter: integer expected";
+      if (
+        message.previousCounter != null &&
+        message.hasOwnProperty("previousCounter")
+      )
+        if (!$util.isInteger(message.previousCounter))
+          return "previousCounter: integer expected";
+      if (message.ciphertext != null && message.hasOwnProperty("ciphertext"))
         if (
           !(
-            (message.ciphertext && typeof message.ciphertext.length === 'number') ||
+            (message.ciphertext &&
+              typeof message.ciphertext.length === "number") ||
             $util.isString(message.ciphertext)
           )
         )
-          return 'ciphertext: buffer expected';
+          return "ciphertext: buffer expected";
       return null;
     };
 
@@ -221,23 +240,30 @@ $root.textsecure = (function () {
       if (object instanceof $root.textsecure.WhisperMessage) return object;
       var message = new $root.textsecure.WhisperMessage();
       if (object.ephemeralKey != null)
-        if (typeof object.ephemeralKey === 'string')
+        if (typeof object.ephemeralKey === "string")
           $util.base64.decode(
             object.ephemeralKey,
-            (message.ephemeralKey = $util.newBuffer($util.base64.length(object.ephemeralKey))),
-            0,
+            (message.ephemeralKey = $util.newBuffer(
+              $util.base64.length(object.ephemeralKey)
+            )),
+            0
           );
-        else if (object.ephemeralKey.length) message.ephemeralKey = object.ephemeralKey;
+        else if (object.ephemeralKey.length)
+          message.ephemeralKey = object.ephemeralKey;
       if (object.counter != null) message.counter = object.counter >>> 0;
-      if (object.previousCounter != null) message.previousCounter = object.previousCounter >>> 0;
+      if (object.previousCounter != null)
+        message.previousCounter = object.previousCounter >>> 0;
       if (object.ciphertext != null)
-        if (typeof object.ciphertext === 'string')
+        if (typeof object.ciphertext === "string")
           $util.base64.decode(
             object.ciphertext,
-            (message.ciphertext = $util.newBuffer($util.base64.length(object.ciphertext))),
-            0,
+            (message.ciphertext = $util.newBuffer(
+              $util.base64.length(object.ciphertext)
+            )),
+            0
           );
-        else if (object.ciphertext.length) message.ciphertext = object.ciphertext;
+        else if (object.ciphertext.length)
+          message.ciphertext = object.ciphertext;
       return message;
     };
 
@@ -254,33 +280,50 @@ $root.textsecure = (function () {
       if (!options) options = {};
       var object = {};
       if (options.defaults) {
-        if (options.bytes === String) object.ephemeralKey = '';
+        if (options.bytes === String) object.ephemeralKey = "";
         else {
           object.ephemeralKey = [];
-          if (options.bytes !== Array) object.ephemeralKey = $util.newBuffer(object.ephemeralKey);
+          if (options.bytes !== Array)
+            object.ephemeralKey = $util.newBuffer(object.ephemeralKey);
         }
         object.counter = 0;
         object.previousCounter = 0;
-        if (options.bytes === String) object.ciphertext = '';
+        if (options.bytes === String) object.ciphertext = "";
         else {
           object.ciphertext = [];
-          if (options.bytes !== Array) object.ciphertext = $util.newBuffer(object.ciphertext);
+          if (options.bytes !== Array)
+            object.ciphertext = $util.newBuffer(object.ciphertext);
         }
       }
-      if (message.ephemeralKey != null && message.hasOwnProperty('ephemeralKey'))
+      if (
+        message.ephemeralKey != null &&
+        message.hasOwnProperty("ephemeralKey")
+      )
         object.ephemeralKey =
           options.bytes === String
-            ? $util.base64.encode(message.ephemeralKey, 0, message.ephemeralKey.length)
+            ? $util.base64.encode(
+                message.ephemeralKey,
+                0,
+                message.ephemeralKey.length
+              )
             : options.bytes === Array
             ? Array.prototype.slice.call(message.ephemeralKey)
             : message.ephemeralKey;
-      if (message.counter != null && message.hasOwnProperty('counter')) object.counter = message.counter;
-      if (message.previousCounter != null && message.hasOwnProperty('previousCounter'))
+      if (message.counter != null && message.hasOwnProperty("counter"))
+        object.counter = message.counter;
+      if (
+        message.previousCounter != null &&
+        message.hasOwnProperty("previousCounter")
+      )
         object.previousCounter = message.previousCounter;
-      if (message.ciphertext != null && message.hasOwnProperty('ciphertext'))
+      if (message.ciphertext != null && message.hasOwnProperty("ciphertext"))
         object.ciphertext =
           options.bytes === String
-            ? $util.base64.encode(message.ciphertext, 0, message.ciphertext.length)
+            ? $util.base64.encode(
+                message.ciphertext,
+                0,
+                message.ciphertext.length
+              )
             : options.bytes === Array
             ? Array.prototype.slice.call(message.ciphertext)
             : message.ciphertext;
@@ -399,18 +442,28 @@ $root.textsecure = (function () {
      */
     PreKeyWhisperMessage.encode = function encode(message, writer) {
       if (!writer) writer = $Writer.create();
-      if (message.preKeyId != null && message.hasOwnProperty('preKeyId'))
+      if (message.preKeyId != null && message.hasOwnProperty("preKeyId"))
         writer.uint32(/* id 1, wireType 0 =*/ 8).uint32(message.preKeyId);
-      if (message.baseKey != null && message.hasOwnProperty('baseKey'))
+      if (message.baseKey != null && message.hasOwnProperty("baseKey"))
         writer.uint32(/* id 2, wireType 2 =*/ 18).bytes(message.baseKey);
-      if (message.identityKey != null && message.hasOwnProperty('identityKey'))
+      if (message.identityKey != null && message.hasOwnProperty("identityKey"))
         writer.uint32(/* id 3, wireType 2 =*/ 26).bytes(message.identityKey);
-      if (message.message != null && message.hasOwnProperty('message'))
+      if (message.message != null && message.hasOwnProperty("message"))
         writer.uint32(/* id 4, wireType 2 =*/ 34).bytes(message.message);
-      if (message.registrationId != null && message.hasOwnProperty('registrationId'))
-        writer.uint32(/* id 5, wireType 0 =*/ 40).uint32(message.registrationId);
-      if (message.signedPreKeyId != null && message.hasOwnProperty('signedPreKeyId'))
-        writer.uint32(/* id 6, wireType 0 =*/ 48).uint32(message.signedPreKeyId);
+      if (
+        message.registrationId != null &&
+        message.hasOwnProperty("registrationId")
+      )
+        writer
+          .uint32(/* id 5, wireType 0 =*/ 40)
+          .uint32(message.registrationId);
+      if (
+        message.signedPreKeyId != null &&
+        message.hasOwnProperty("signedPreKeyId")
+      )
+        writer
+          .uint32(/* id 6, wireType 0 =*/ 48)
+          .uint32(message.signedPreKeyId);
       return writer;
     };
 
@@ -423,7 +476,10 @@ $root.textsecure = (function () {
      * @param {$protobuf.Writer} [writer] Writer to encode to
      * @returns {$protobuf.Writer} Writer
      */
-    PreKeyWhisperMessage.encodeDelimited = function encodeDelimited(message, writer) {
+    PreKeyWhisperMessage.encodeDelimited = function encodeDelimited(
+      message,
+      writer
+    ) {
       return this.encode(message, writer).ldelim();
     };
 
@@ -495,31 +551,48 @@ $root.textsecure = (function () {
      * @returns {string|null} `null` if valid, otherwise the reason why it is not
      */
     PreKeyWhisperMessage.verify = function verify(message) {
-      if (typeof message !== 'object' || message === null) return 'object expected';
-      if (message.registrationId != null && message.hasOwnProperty('registrationId'))
-        if (!$util.isInteger(message.registrationId)) return 'registrationId: integer expected';
-      if (message.preKeyId != null && message.hasOwnProperty('preKeyId'))
-        if (!$util.isInteger(message.preKeyId)) return 'preKeyId: integer expected';
-      if (message.signedPreKeyId != null && message.hasOwnProperty('signedPreKeyId'))
-        if (!$util.isInteger(message.signedPreKeyId)) return 'signedPreKeyId: integer expected';
-      if (message.baseKey != null && message.hasOwnProperty('baseKey'))
-        if (
-          !((message.baseKey && typeof message.baseKey.length === 'number') || $util.isString(message.baseKey))
-        )
-          return 'baseKey: buffer expected';
-      if (message.identityKey != null && message.hasOwnProperty('identityKey'))
+      if (typeof message !== "object" || message === null)
+        return "object expected";
+      if (
+        message.registrationId != null &&
+        message.hasOwnProperty("registrationId")
+      )
+        if (!$util.isInteger(message.registrationId))
+          return "registrationId: integer expected";
+      if (message.preKeyId != null && message.hasOwnProperty("preKeyId"))
+        if (!$util.isInteger(message.preKeyId))
+          return "preKeyId: integer expected";
+      if (
+        message.signedPreKeyId != null &&
+        message.hasOwnProperty("signedPreKeyId")
+      )
+        if (!$util.isInteger(message.signedPreKeyId))
+          return "signedPreKeyId: integer expected";
+      if (message.baseKey != null && message.hasOwnProperty("baseKey"))
         if (
           !(
-            (message.identityKey && typeof message.identityKey.length === 'number') ||
+            (message.baseKey && typeof message.baseKey.length === "number") ||
+            $util.isString(message.baseKey)
+          )
+        )
+          return "baseKey: buffer expected";
+      if (message.identityKey != null && message.hasOwnProperty("identityKey"))
+        if (
+          !(
+            (message.identityKey &&
+              typeof message.identityKey.length === "number") ||
             $util.isString(message.identityKey)
           )
         )
-          return 'identityKey: buffer expected';
-      if (message.message != null && message.hasOwnProperty('message'))
+          return "identityKey: buffer expected";
+      if (message.message != null && message.hasOwnProperty("message"))
         if (
-          !((message.message && typeof message.message.length === 'number') || $util.isString(message.message))
+          !(
+            (message.message && typeof message.message.length === "number") ||
+            $util.isString(message.message)
+          )
         )
-          return 'message: buffer expected';
+          return "message: buffer expected";
       return null;
     };
 
@@ -532,33 +605,43 @@ $root.textsecure = (function () {
      * @returns {textsecure.PreKeyWhisperMessage} PreKeyWhisperMessage
      */
     PreKeyWhisperMessage.fromObject = function fromObject(object) {
-      if (object instanceof $root.textsecure.PreKeyWhisperMessage) return object;
+      if (object instanceof $root.textsecure.PreKeyWhisperMessage)
+        return object;
       var message = new $root.textsecure.PreKeyWhisperMessage();
-      if (object.registrationId != null) message.registrationId = object.registrationId >>> 0;
+      if (object.registrationId != null)
+        message.registrationId = object.registrationId >>> 0;
       if (object.preKeyId != null) message.preKeyId = object.preKeyId >>> 0;
-      if (object.signedPreKeyId != null) message.signedPreKeyId = object.signedPreKeyId >>> 0;
+      if (object.signedPreKeyId != null)
+        message.signedPreKeyId = object.signedPreKeyId >>> 0;
       if (object.baseKey != null)
-        if (typeof object.baseKey === 'string')
+        if (typeof object.baseKey === "string")
           $util.base64.decode(
             object.baseKey,
-            (message.baseKey = $util.newBuffer($util.base64.length(object.baseKey))),
-            0,
+            (message.baseKey = $util.newBuffer(
+              $util.base64.length(object.baseKey)
+            )),
+            0
           );
         else if (object.baseKey.length) message.baseKey = object.baseKey;
       if (object.identityKey != null)
-        if (typeof object.identityKey === 'string')
+        if (typeof object.identityKey === "string")
           $util.base64.decode(
             object.identityKey,
-            (message.identityKey = $util.newBuffer($util.base64.length(object.identityKey))),
-            0,
+            (message.identityKey = $util.newBuffer(
+              $util.base64.length(object.identityKey)
+            )),
+            0
           );
-        else if (object.identityKey.length) message.identityKey = object.identityKey;
+        else if (object.identityKey.length)
+          message.identityKey = object.identityKey;
       if (object.message != null)
-        if (typeof object.message === 'string')
+        if (typeof object.message === "string")
           $util.base64.decode(
             object.message,
-            (message.message = $util.newBuffer($util.base64.length(object.message))),
-            0,
+            (message.message = $util.newBuffer(
+              $util.base64.length(object.message)
+            )),
+            0
           );
         else if (object.message.length) message.message = object.message;
       return message;
@@ -578,49 +661,63 @@ $root.textsecure = (function () {
       var object = {};
       if (options.defaults) {
         object.preKeyId = 0;
-        if (options.bytes === String) object.baseKey = '';
+        if (options.bytes === String) object.baseKey = "";
         else {
           object.baseKey = [];
-          if (options.bytes !== Array) object.baseKey = $util.newBuffer(object.baseKey);
+          if (options.bytes !== Array)
+            object.baseKey = $util.newBuffer(object.baseKey);
         }
-        if (options.bytes === String) object.identityKey = '';
+        if (options.bytes === String) object.identityKey = "";
         else {
           object.identityKey = [];
-          if (options.bytes !== Array) object.identityKey = $util.newBuffer(object.identityKey);
+          if (options.bytes !== Array)
+            object.identityKey = $util.newBuffer(object.identityKey);
         }
-        if (options.bytes === String) object.message = '';
+        if (options.bytes === String) object.message = "";
         else {
           object.message = [];
-          if (options.bytes !== Array) object.message = $util.newBuffer(object.message);
+          if (options.bytes !== Array)
+            object.message = $util.newBuffer(object.message);
         }
         object.registrationId = 0;
         object.signedPreKeyId = 0;
       }
-      if (message.preKeyId != null && message.hasOwnProperty('preKeyId')) object.preKeyId = message.preKeyId;
-      if (message.baseKey != null && message.hasOwnProperty('baseKey'))
+      if (message.preKeyId != null && message.hasOwnProperty("preKeyId"))
+        object.preKeyId = message.preKeyId;
+      if (message.baseKey != null && message.hasOwnProperty("baseKey"))
         object.baseKey =
           options.bytes === String
             ? $util.base64.encode(message.baseKey, 0, message.baseKey.length)
             : options.bytes === Array
             ? Array.prototype.slice.call(message.baseKey)
             : message.baseKey;
-      if (message.identityKey != null && message.hasOwnProperty('identityKey'))
+      if (message.identityKey != null && message.hasOwnProperty("identityKey"))
         object.identityKey =
           options.bytes === String
-            ? $util.base64.encode(message.identityKey, 0, message.identityKey.length)
+            ? $util.base64.encode(
+                message.identityKey,
+                0,
+                message.identityKey.length
+              )
             : options.bytes === Array
             ? Array.prototype.slice.call(message.identityKey)
             : message.identityKey;
-      if (message.message != null && message.hasOwnProperty('message'))
+      if (message.message != null && message.hasOwnProperty("message"))
         object.message =
           options.bytes === String
             ? $util.base64.encode(message.message, 0, message.message.length)
             : options.bytes === Array
             ? Array.prototype.slice.call(message.message)
             : message.message;
-      if (message.registrationId != null && message.hasOwnProperty('registrationId'))
+      if (
+        message.registrationId != null &&
+        message.hasOwnProperty("registrationId")
+      )
         object.registrationId = message.registrationId;
-      if (message.signedPreKeyId != null && message.hasOwnProperty('signedPreKeyId'))
+      if (
+        message.signedPreKeyId != null &&
+        message.hasOwnProperty("signedPreKeyId")
+      )
         object.signedPreKeyId = message.signedPreKeyId;
       return object;
     };
@@ -728,16 +825,24 @@ $root.textsecure = (function () {
      */
     KeyExchangeMessage.encode = function encode(message, writer) {
       if (!writer) writer = $Writer.create();
-      if (message.id != null && message.hasOwnProperty('id'))
+      if (message.id != null && message.hasOwnProperty("id"))
         writer.uint32(/* id 1, wireType 0 =*/ 8).uint32(message.id);
-      if (message.baseKey != null && message.hasOwnProperty('baseKey'))
+      if (message.baseKey != null && message.hasOwnProperty("baseKey"))
         writer.uint32(/* id 2, wireType 2 =*/ 18).bytes(message.baseKey);
-      if (message.ephemeralKey != null && message.hasOwnProperty('ephemeralKey'))
+      if (
+        message.ephemeralKey != null &&
+        message.hasOwnProperty("ephemeralKey")
+      )
         writer.uint32(/* id 3, wireType 2 =*/ 26).bytes(message.ephemeralKey);
-      if (message.identityKey != null && message.hasOwnProperty('identityKey'))
+      if (message.identityKey != null && message.hasOwnProperty("identityKey"))
         writer.uint32(/* id 4, wireType 2 =*/ 34).bytes(message.identityKey);
-      if (message.baseKeySignature != null && message.hasOwnProperty('baseKeySignature'))
-        writer.uint32(/* id 5, wireType 2 =*/ 42).bytes(message.baseKeySignature);
+      if (
+        message.baseKeySignature != null &&
+        message.hasOwnProperty("baseKeySignature")
+      )
+        writer
+          .uint32(/* id 5, wireType 2 =*/ 42)
+          .bytes(message.baseKeySignature);
       return writer;
     };
 
@@ -750,7 +855,10 @@ $root.textsecure = (function () {
      * @param {$protobuf.Writer} [writer] Writer to encode to
      * @returns {$protobuf.Writer} Writer
      */
-    KeyExchangeMessage.encodeDelimited = function encodeDelimited(message, writer) {
+    KeyExchangeMessage.encodeDelimited = function encodeDelimited(
+      message,
+      writer
+    ) {
       return this.encode(message, writer).ldelim();
     };
 
@@ -819,38 +927,51 @@ $root.textsecure = (function () {
      * @returns {string|null} `null` if valid, otherwise the reason why it is not
      */
     KeyExchangeMessage.verify = function verify(message) {
-      if (typeof message !== 'object' || message === null) return 'object expected';
-      if (message.id != null && message.hasOwnProperty('id'))
-        if (!$util.isInteger(message.id)) return 'id: integer expected';
-      if (message.baseKey != null && message.hasOwnProperty('baseKey'))
-        if (
-          !((message.baseKey && typeof message.baseKey.length === 'number') || $util.isString(message.baseKey))
-        )
-          return 'baseKey: buffer expected';
-      if (message.ephemeralKey != null && message.hasOwnProperty('ephemeralKey'))
+      if (typeof message !== "object" || message === null)
+        return "object expected";
+      if (message.id != null && message.hasOwnProperty("id"))
+        if (!$util.isInteger(message.id)) return "id: integer expected";
+      if (message.baseKey != null && message.hasOwnProperty("baseKey"))
         if (
           !(
-            (message.ephemeralKey && typeof message.ephemeralKey.length === 'number') ||
+            (message.baseKey && typeof message.baseKey.length === "number") ||
+            $util.isString(message.baseKey)
+          )
+        )
+          return "baseKey: buffer expected";
+      if (
+        message.ephemeralKey != null &&
+        message.hasOwnProperty("ephemeralKey")
+      )
+        if (
+          !(
+            (message.ephemeralKey &&
+              typeof message.ephemeralKey.length === "number") ||
             $util.isString(message.ephemeralKey)
           )
         )
-          return 'ephemeralKey: buffer expected';
-      if (message.identityKey != null && message.hasOwnProperty('identityKey'))
+          return "ephemeralKey: buffer expected";
+      if (message.identityKey != null && message.hasOwnProperty("identityKey"))
         if (
           !(
-            (message.identityKey && typeof message.identityKey.length === 'number') ||
+            (message.identityKey &&
+              typeof message.identityKey.length === "number") ||
             $util.isString(message.identityKey)
           )
         )
-          return 'identityKey: buffer expected';
-      if (message.baseKeySignature != null && message.hasOwnProperty('baseKeySignature'))
+          return "identityKey: buffer expected";
+      if (
+        message.baseKeySignature != null &&
+        message.hasOwnProperty("baseKeySignature")
+      )
         if (
           !(
-            (message.baseKeySignature && typeof message.baseKeySignature.length === 'number') ||
+            (message.baseKeySignature &&
+              typeof message.baseKeySignature.length === "number") ||
             $util.isString(message.baseKeySignature)
           )
         )
-          return 'baseKeySignature: buffer expected';
+          return "baseKeySignature: buffer expected";
       return null;
     };
 
@@ -867,37 +988,48 @@ $root.textsecure = (function () {
       var message = new $root.textsecure.KeyExchangeMessage();
       if (object.id != null) message.id = object.id >>> 0;
       if (object.baseKey != null)
-        if (typeof object.baseKey === 'string')
+        if (typeof object.baseKey === "string")
           $util.base64.decode(
             object.baseKey,
-            (message.baseKey = $util.newBuffer($util.base64.length(object.baseKey))),
-            0,
+            (message.baseKey = $util.newBuffer(
+              $util.base64.length(object.baseKey)
+            )),
+            0
           );
         else if (object.baseKey.length) message.baseKey = object.baseKey;
       if (object.ephemeralKey != null)
-        if (typeof object.ephemeralKey === 'string')
+        if (typeof object.ephemeralKey === "string")
           $util.base64.decode(
             object.ephemeralKey,
-            (message.ephemeralKey = $util.newBuffer($util.base64.length(object.ephemeralKey))),
-            0,
+            (message.ephemeralKey = $util.newBuffer(
+              $util.base64.length(object.ephemeralKey)
+            )),
+            0
           );
-        else if (object.ephemeralKey.length) message.ephemeralKey = object.ephemeralKey;
+        else if (object.ephemeralKey.length)
+          message.ephemeralKey = object.ephemeralKey;
       if (object.identityKey != null)
-        if (typeof object.identityKey === 'string')
+        if (typeof object.identityKey === "string")
           $util.base64.decode(
             object.identityKey,
-            (message.identityKey = $util.newBuffer($util.base64.length(object.identityKey))),
-            0,
+            (message.identityKey = $util.newBuffer(
+              $util.base64.length(object.identityKey)
+            )),
+            0
           );
-        else if (object.identityKey.length) message.identityKey = object.identityKey;
+        else if (object.identityKey.length)
+          message.identityKey = object.identityKey;
       if (object.baseKeySignature != null)
-        if (typeof object.baseKeySignature === 'string')
+        if (typeof object.baseKeySignature === "string")
           $util.base64.decode(
             object.baseKeySignature,
-            (message.baseKeySignature = $util.newBuffer($util.base64.length(object.baseKeySignature))),
-            0,
+            (message.baseKeySignature = $util.newBuffer(
+              $util.base64.length(object.baseKeySignature)
+            )),
+            0
           );
-        else if (object.baseKeySignature.length) message.baseKeySignature = object.baseKeySignature;
+        else if (object.baseKeySignature.length)
+          message.baseKeySignature = object.baseKeySignature;
       return message;
     };
 
@@ -915,53 +1047,76 @@ $root.textsecure = (function () {
       var object = {};
       if (options.defaults) {
         object.id = 0;
-        if (options.bytes === String) object.baseKey = '';
+        if (options.bytes === String) object.baseKey = "";
         else {
           object.baseKey = [];
-          if (options.bytes !== Array) object.baseKey = $util.newBuffer(object.baseKey);
+          if (options.bytes !== Array)
+            object.baseKey = $util.newBuffer(object.baseKey);
         }
-        if (options.bytes === String) object.ephemeralKey = '';
+        if (options.bytes === String) object.ephemeralKey = "";
         else {
           object.ephemeralKey = [];
-          if (options.bytes !== Array) object.ephemeralKey = $util.newBuffer(object.ephemeralKey);
+          if (options.bytes !== Array)
+            object.ephemeralKey = $util.newBuffer(object.ephemeralKey);
         }
-        if (options.bytes === String) object.identityKey = '';
+        if (options.bytes === String) object.identityKey = "";
         else {
           object.identityKey = [];
-          if (options.bytes !== Array) object.identityKey = $util.newBuffer(object.identityKey);
+          if (options.bytes !== Array)
+            object.identityKey = $util.newBuffer(object.identityKey);
         }
-        if (options.bytes === String) object.baseKeySignature = '';
+        if (options.bytes === String) object.baseKeySignature = "";
         else {
           object.baseKeySignature = [];
-          if (options.bytes !== Array) object.baseKeySignature = $util.newBuffer(object.baseKeySignature);
+          if (options.bytes !== Array)
+            object.baseKeySignature = $util.newBuffer(object.baseKeySignature);
         }
       }
-      if (message.id != null && message.hasOwnProperty('id')) object.id = message.id;
-      if (message.baseKey != null && message.hasOwnProperty('baseKey'))
+      if (message.id != null && message.hasOwnProperty("id"))
+        object.id = message.id;
+      if (message.baseKey != null && message.hasOwnProperty("baseKey"))
         object.baseKey =
           options.bytes === String
             ? $util.base64.encode(message.baseKey, 0, message.baseKey.length)
             : options.bytes === Array
             ? Array.prototype.slice.call(message.baseKey)
             : message.baseKey;
-      if (message.ephemeralKey != null && message.hasOwnProperty('ephemeralKey'))
+      if (
+        message.ephemeralKey != null &&
+        message.hasOwnProperty("ephemeralKey")
+      )
         object.ephemeralKey =
           options.bytes === String
-            ? $util.base64.encode(message.ephemeralKey, 0, message.ephemeralKey.length)
+            ? $util.base64.encode(
+                message.ephemeralKey,
+                0,
+                message.ephemeralKey.length
+              )
             : options.bytes === Array
             ? Array.prototype.slice.call(message.ephemeralKey)
             : message.ephemeralKey;
-      if (message.identityKey != null && message.hasOwnProperty('identityKey'))
+      if (message.identityKey != null && message.hasOwnProperty("identityKey"))
         object.identityKey =
           options.bytes === String
-            ? $util.base64.encode(message.identityKey, 0, message.identityKey.length)
+            ? $util.base64.encode(
+                message.identityKey,
+                0,
+                message.identityKey.length
+              )
             : options.bytes === Array
             ? Array.prototype.slice.call(message.identityKey)
             : message.identityKey;
-      if (message.baseKeySignature != null && message.hasOwnProperty('baseKeySignature'))
+      if (
+        message.baseKeySignature != null &&
+        message.hasOwnProperty("baseKeySignature")
+      )
         object.baseKeySignature =
           options.bytes === String
-            ? $util.base64.encode(message.baseKeySignature, 0, message.baseKeySignature.length)
+            ? $util.base64.encode(
+                message.baseKeySignature,
+                0,
+                message.baseKeySignature.length
+              )
             : options.bytes === Array
             ? Array.prototype.slice.call(message.baseKeySignature)
             : message.baseKeySignature;

@@ -1,4 +1,4 @@
-const crypto = require('./crypto.js');
+const crypto = require("./crypto.js");
 
 var VERSION = 0;
 
@@ -26,7 +26,7 @@ function getEncodedChunk(hash, offset) {
     100000;
   var s = chunk.toString();
   while (s.length < 5) {
-    s = '0' + s;
+    s = "0" + s;
   }
   return s;
 }
@@ -50,21 +50,26 @@ exports.FingerprintGenerator = function (iterations) {
 };
 
 exports.FingerprintGenerator.prototype = {
-  createFor: function (localIdentifier, localIdentityKey, remoteIdentifier, remoteIdentityKey) {
+  createFor: function (
+    localIdentifier,
+    localIdentityKey,
+    remoteIdentifier,
+    remoteIdentityKey
+  ) {
     if (
-      typeof localIdentifier !== 'string' ||
-      typeof remoteIdentifier !== 'string' ||
+      typeof localIdentifier !== "string" ||
+      typeof remoteIdentifier !== "string" ||
       !(localIdentityKey instanceof ArrayBuffer) ||
       !(remoteIdentityKey instanceof ArrayBuffer)
     ) {
-      throw new Error('Invalid arguments');
+      throw new Error("Invalid arguments");
     }
 
     return Promise.all([
       getDisplayStringFor(localIdentifier, localIdentityKey, this.iterations),
       getDisplayStringFor(remoteIdentifier, remoteIdentityKey, this.iterations),
     ]).then(function (fingerprints) {
-      return fingerprints.sort().join('');
+      return fingerprints.sort().join("");
     });
   },
 };
